@@ -14,11 +14,6 @@ export class AppComponent {
       title: 'Home',
       url: '/home',
       icon: 'home'
-    },
-    {
-      title: 'List',
-      url: '/list',
-      icon: 'list'
     }
   ];
 
@@ -37,3 +32,4 @@ export class AppComponent {
     });
   }
 }
+
