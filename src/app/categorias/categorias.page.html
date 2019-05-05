@@ -8,8 +8,18 @@
       </ion-title>
     </ion-toolbar>
   </ion-header>
+
 <ion-content>
 
-  <p>pagina de categoria</p>
+  <!-- List of Text Items -->
+<ion-list>
+  <ion-item *ngFor="let item of items">
+    <ion-thumbnail>
+      <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
+    </ion-thumbnail>
+    <ion-label>{{item.nome}}</ion-label>
+    <ion-button>Visualizar</ion-button>
+    </ion-item> 
+  </ion-list>
 
 </ion-content>
