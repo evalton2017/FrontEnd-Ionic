@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { Route } from '@angular/compiler/src/core';
 import { CredenciaisDTO } from 'src/models/credenciais.dto';
+import { AuthService } from 'src/services/auth.service';
 
 
 @Component({
@@ -16,7 +17,11 @@ export class HomePage {
     senha:""
   }
 
-  constructor(private ctrlNav:NavController, private menu:MenuController) {
+  constructor(
+      private ctrlNav:NavController,
+      private menu:MenuController,
+      private auth:AuthService
+      ) {
     
    }
 
@@ -29,7 +34,13 @@ export class HomePage {
   }
 
   login(){
-    console.log(this.creds);
-    this.ctrlNav.navigateForward('categorias');
+    this.auth.autenticate(this.creds)
+      .subscribe(response =>{
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.ctrlNav.navigateForward('categorias');
+      },
+      error =>{
+        alert(error.message)
+      });    
   }
 }

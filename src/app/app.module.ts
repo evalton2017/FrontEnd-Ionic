@@ -11,6 +11,8 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { CategoriaService } from 'src/services/domain/categoria.service';
 import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
+import { AuthService } from 'src/services/auth.service';
+import { StorageService } from 'src/services/storage.service';
 
 
 
@@ -29,7 +31,9 @@ import { ErrorInterceptorProvider } from '../interceptors/error-interceptor';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     CategoriaService,
-    ErrorInterceptorProvider
+    ErrorInterceptorProvider,
+    AuthService,
+    StorageService
   ],
   bootstrap: [AppComponent]
 })
