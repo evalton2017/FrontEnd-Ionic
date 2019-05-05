@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { NavController, MenuController } from '@ionic/angular';
+import { Route } from '@angular/compiler/src/core';
 
 
 @Component({
@@ -8,4 +10,19 @@ import { Component } from '@angular/core';
 })
 export class HomePage {
 
+  constructor(private ctrlNav:NavController, private menu:MenuController) {
+    
+   }
+
+   ionViewWillEnter() {
+    this.menu.enable(false);
+  }
+
+  ionViewDidLeave() {
+    this.menu.enable(true);
+  }
+
+  login(){
+    this.ctrlNav.navigateForward('categorias');
+  }
 }
