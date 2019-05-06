@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      Categorias
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-avatar class="foto">
+    <img class="circle" [src]="cliente?.imageUrl || 'assets/imgs/avatar.jpg'">  
+  </ion-avatar>
+  <h2 text-center>{{cliente?.nome}}</h2>
+  <p text-center>{{cliente?.email}}</p>
+</ion-content>
