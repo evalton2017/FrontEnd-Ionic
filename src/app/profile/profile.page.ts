@@ -3,6 +3,7 @@ import { StorageService } from 'src/services/storage.service';
 import { ClienteDTO } from 'src/models/cliente.dto';
 import { ClienteService } from 'src/services/domain/cliente.service';
 import { API_CONFIG } from 'src/config/api.config';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,8 @@ export class ProfilePage implements OnInit {
 
   constructor(
     private storage:StorageService,
-    private clienteService:ClienteService
+    private clienteService:ClienteService,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -27,8 +29,12 @@ export class ProfilePage implements OnInit {
           this.getImageIfExists();
         },
         error=>{
-          
+          if(error.status ==403){
+            this.router.navigate(['home']);
+          }
         });
+    }else{
+      this.router.navigate(['home']);
     }
   }
 
@@ -38,7 +44,7 @@ export class ProfilePage implements OnInit {
         this.cliente.imageUrl=`${API_CONFIG.bucketBaseUrl}/cp${this.cliente.id}.jpg`;
       },
       error=>{
-        console.log(error)
+      
       });
     
   }

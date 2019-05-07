@@ -32,6 +32,17 @@ export class HomePage {
     this.menu.enable(true);
   }
 
+  ionViewDidEnter(){
+    this.auth.refreshToken()
+      .subscribe(response =>{
+        this.auth.successfulLogin(response.headers.get('Authorization'));
+        this.ctrlNav.navigateForward('categorias');
+      },
+      error =>{
+     
+      });  
+  }
+
   login(){
     this.auth.autenticate(this.creds)
       .subscribe(response =>{
@@ -39,7 +50,7 @@ export class HomePage {
         this.ctrlNav.navigateForward('categorias');
       },
       error =>{
-        alert(error.message)
+     
       });    
   }
 }
