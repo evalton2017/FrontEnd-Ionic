@@ -7,15 +7,10 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full'
   },
-  {
-    path: 'home',
-    loadChildren: './home/home.module#HomePageModule'
-  },
-  { 
-    path: 'categorias',
-    loadChildren: './categorias/categorias.module#CategoriasPageModule' 
-  },
-  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' }
+  { path: 'home',loadChildren: './home/home.module#HomePageModule' },
+  { path: 'categorias',loadChildren: './categorias/categorias.module#CategoriasPageModule'},
+  { path: 'profile', loadChildren: './profile/profile.module#ProfilePageModule' },
+  { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' }
 ];
 
 @NgModule({

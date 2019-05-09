@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, MenuController } from '@ionic/angular';
 import { CredenciaisDTO } from 'src/models/credenciais.dto';
 import { AuthService } from 'src/services/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -19,7 +20,8 @@ export class HomePage {
   constructor(
       private ctrlNav:NavController,
       private menu:MenuController,
-      private auth:AuthService
+      private auth:AuthService,
+      private router:Router
       ) {
     
    }
@@ -52,5 +54,9 @@ export class HomePage {
       error =>{
      
       });    
+  }
+
+  signup(){
+    this.router.navigate(['signup'])
   }
 }
