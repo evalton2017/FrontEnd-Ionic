@@ -10,10 +10,12 @@
         <ion-label stacked>Nome *</ion-label>
         <ion-input formControlName="nome" type="text" ></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['nome'].dirty && formGroup.controls['nome'].errors" margin-left>valor invalido</p>
     <ion-item>
         <ion-label stacked>Email *</ion-label>
         <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['email'].dirty && formGroup.controls['email'].errors" margin-left>valor invalido</p>
     <ion-radio-group  formControlName="tipo">
         <ion-list-header>
           Tipo de Cliente
@@ -33,10 +35,12 @@
         <ion-label >Cpf ou CNPJ</ion-label>
         <ion-input formControlName="cpfOuCnpj" type="text"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['cpfOuCnpj'].dirty && formGroup.controls['cpfOuCnpj'].errors" margin-left>valor invalido</p>
     <ion-item>
         <ion-label >Senha *</ion-label>
         <ion-input formControlName="senha" type="password"></ion-input>
     </ion-item>
+    <p class="danger" *ngIf="formGroup.controls['senha'].dirty && formGroup.controls['senha'].errors" margin-left >valor invalido</p>
     <ion-item>
         <ion-label >Logradouro *</ion-label>
         <ion-input formControlName="logradouro" type="text"></ion-input>
@@ -84,7 +88,7 @@
         </ion-select>
     </ion-item>
     
-    <ion-button expand="block" type="submit">Criar Conta</ion-button>
+    <ion-button expand="block" type="submit" [disabled]="formGroup.invalid">Criar Conta</ion-button>
 
   </form> 
 
