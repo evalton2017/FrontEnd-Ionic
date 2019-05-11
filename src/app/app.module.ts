@@ -16,6 +16,7 @@ import { AuthService } from 'src/services/auth.service';
 import { StorageService } from 'src/services/storage.service';
 import { ClienteService } from 'src/services/domain/cliente.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { ProdutoService } from 'src/services/domain/produto.service';
 
 
 
@@ -30,6 +31,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule,
     
+    
   ],
   providers: [
     StatusBar,
@@ -40,7 +42,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     ErrorInterceptorProvider,
     AuthService,
     StorageService,
-    ClienteService
+    ClienteService,
+    ProdutoService
   ],
   bootstrap: [AppComponent]
 })

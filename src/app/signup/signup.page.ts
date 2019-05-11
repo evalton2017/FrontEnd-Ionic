@@ -5,6 +5,8 @@ import { EstadoService } from 'src/services/domain/estado.service';
 import { CidadeService } from 'src/services/domain/cidade.service';
 import { EstadoDTO } from 'src/models/estado.dto';
 import { CidadeDTO } from 'src/models/cidade.dto';
+import { ClienteService } from 'src/services/domain/cliente.service';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-signup',
@@ -22,6 +24,8 @@ export class SignupPage implements OnInit {
     private router:Router,
     private estadoService:EstadoService,
     private cidadeService:CidadeService,
+    private clienteService:ClienteService,
+    private alertCtrl:AlertController
   ) {
     this.formGroup = this.formBuilder.group({
       nome:['',[Validators.required, Validators.minLength(5), Validators.maxLength(120)]],
@@ -58,7 +62,13 @@ export class SignupPage implements OnInit {
   }
 
   signupUser(){
-    console.log("chegou aqui")
+    this.clienteService.insert(this.formGroup.value)
+        .subscribe(response=>{
+          this.showInsertOk();
+          this.router.navigate(['/'])
+        },
+        error=>{}
+        );
   }
 
   updateCidades(){
@@ -72,5 +82,21 @@ export class SignupPage implements OnInit {
 
     });
   }
+
+  async showInsertOk(){
+    let alert = await this.alertCtrl.create({
+      subHeader: 'Sucesso',
+      header: '',
+      message: 'Cadastro efetuado com sucesso',
+      buttons: [{
+        text:'OK',
+        
+      }]
+      
+    });
+    await alert.present();
+    }
+
+
 
 }

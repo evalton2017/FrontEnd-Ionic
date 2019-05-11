@@ -9,7 +9,8 @@ import { catchError } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { StorageService } from 'src/services/storage.service';
 import { AlertController } from '@ionic/angular';
-import { Message } from '@angular/compiler/src/i18n/i18n_ast';
+import { FieldMessage } from 'src/models/fieldmessage';
+
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
@@ -39,6 +40,10 @@ export class ErrorInterceptor implements HttpInterceptor {
                     this.henddle403();
                     break;
 
+                    case 422:
+                    this.henddle422(errorObj);
+                    break;
+
                     default:
                     this.hendleDefaultError(errorObj)
                 }
@@ -50,12 +55,26 @@ export class ErrorInterceptor implements HttpInterceptor {
     henddle403(){
         this.storage.setLocalUser(null);
     }
+
     async hendle401(){
 
         let alert = await this.alertCtrl.create({
             header: 'Erro: 403',
             subHeader: 'erro de autenticação',
             message: 'Usuario ou senha invalido.',
+            buttons: ['OK']
+            
+        });
+        await alert.present();
+        
+    }
+
+    async henddle422(errorObj){
+
+        let alert = await this.alertCtrl.create({
+            header: 'Erro: 422: Validação',
+            subHeader: 'erro de autenticação',
+            message: this.listErrors(errorObj.errors),
             buttons: ['OK']
             
         });
@@ -73,6 +92,14 @@ export class ErrorInterceptor implements HttpInterceptor {
             
         });
         await alert.present();
+    }
+
+    private listErrors(messages: FieldMessage[]):string{
+        let s: string = '';
+        for(var i=0; i<messages.length; i++){
+            s= s+'<p><strong>'+messages[i].fieldName+"<strong>:"+messages[i].message +'</p>';
+        }
+        return s;
     }
 }
 

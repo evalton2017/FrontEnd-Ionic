@@ -1,0 +1,23 @@
+<ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>
+        Produtos
+      </ion-title>
+    </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngFor="let item of items">
+      <img [src]="item.imgUrl || 'assets/imgs/produtos.jpeg'">
+      <ion-card-header>
+          <ion-card-subtitle>{{item.nome}}</ion-card-subtitle>
+          <ion-card-title> {{item.preco |currency}}</ion-card-title>
+      </ion-card-header>
+      
+      <ion-button fill="outline" slot="end">View</ion-button>
+  </ion-card>
+
+</ion-content>

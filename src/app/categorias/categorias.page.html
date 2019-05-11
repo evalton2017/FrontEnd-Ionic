@@ -18,8 +18,9 @@
       <img src="{{bucketUrl}}/cat{{item.id}}.jpg">
     </ion-thumbnail>
     <ion-label>{{item.nome}}</ion-label>
-    <ion-button>Visualizar</ion-button>
+    <ion-button (click)="showProdutos(item.id)">Visualizar</ion-button>
     </ion-item> 
   </ion-list>
 
 </ion-content>
+

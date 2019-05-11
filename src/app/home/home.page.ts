@@ -26,7 +26,7 @@ export class HomePage {
     
    }
 
-   ionViewWillEnter() {
+  ionViewWillEnter() {
     this.menu.enable(false);
   }
 
