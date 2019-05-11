@@ -11,9 +11,10 @@
 
 <ion-content>
   <ion-card *ngFor="let item of items">
-      <img [src]="item.imgUrl || 'assets/imgs/produtos.jpeg'">
+      <img [src]="item.imageUrl || 'assets/imgs/produtos.jpeg'">
       <ion-card-header>
           <ion-card-subtitle>{{item.nome}}</ion-card-subtitle>
+          <ion-card-subtitle>{{item.id}}</ion-card-subtitle>
           <ion-card-title> {{item.preco |currency}}</ion-card-title>
       </ion-card-header>
       
