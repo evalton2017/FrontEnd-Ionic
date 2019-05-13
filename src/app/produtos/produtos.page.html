@@ -10,15 +10,16 @@
 </ion-header>
 
 <ion-content>
-  <ion-card *ngFor="let item of items">
-      <img [src]="item.imageUrl || 'assets/imgs/produtos.jpeg'">
-      <ion-card-header>
-          <ion-card-subtitle>{{item.nome}}</ion-card-subtitle>
-          <ion-card-subtitle>{{item.id}}</ion-card-subtitle>
-          <ion-card-title> {{item.preco |currency}}</ion-card-title>
-      </ion-card-header>
-      
-      <ion-button fill="outline" slot="end">View</ion-button>
-  </ion-card>
 
+    <ion-list>
+      <ion-item *ngFor="let item of items">
+        <ion-thumbnail>
+            <img [src]="item.imageUrl || 'assets/imgs/produtos.jpeg'">
+        </ion-thumbnail>
+        <ion-label>{{item.nome}}</ion-label>
+        <ion-title>{{item.preco |currency}}</ion-title>
+        <ion-button (click)="showDetail()" >Detalhes</ion-button>
+        </ion-item> 
+    </ion-list>
+      
 </ion-content>

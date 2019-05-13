@@ -17,6 +17,7 @@ export class ProdutosPage implements OnInit {
   constructor(
     private produtoService:ProdutoService,
     private route:ActivatedRoute,
+    private router:Router
     ) { }
 
   ngOnInit() {
@@ -45,6 +46,10 @@ export class ProdutosPage implements OnInit {
         error=>{}
         )
     }
+  }
+
+  showDetail(){
+    this.router.navigate(['produto-detail'])
   }
 
 }
