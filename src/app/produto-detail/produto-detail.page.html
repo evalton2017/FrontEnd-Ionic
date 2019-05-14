@@ -16,7 +16,7 @@
         <ion-card-subtitle>{{item?.nome}}</ion-card-subtitle>
         <ion-card-title> {{item?.preco |currency}}</ion-card-title>
     </ion-card-header>
-    <ion-button fill="outline" slot="end">Adicionar no carrinho</ion-button>
+    <ion-button fill="outline" slot="end" (click)="adicionar(item)">Adicionar no carrinho</ion-button>
 </ion-card>
 
 </ion-content>

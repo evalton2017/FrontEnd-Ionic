@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ProdutoDTO } from 'src/models/produto.dto';
-import { ActivatedRoute,Params } from '@angular/router';
+import { ActivatedRoute,Params, Router } from '@angular/router';
 import { ProdutoService } from 'src/services/domain/produto.service';
-import { ConsoleReporter } from 'jasmine';
 import { API_CONFIG } from 'src/config/api.config';
+import { CartService } from 'src/services/domain/cart.service';
 
 @Component({
   selector: 'app-produto-detail',
@@ -16,7 +16,9 @@ export class ProdutoDetailPage implements OnInit {
 
   constructor(
     private route:ActivatedRoute,
-    private produtoService:ProdutoService
+    private produtoService:ProdutoService,
+    private cartService:CartService,
+    private router:Router
   ) { }
 
   ngOnInit() {
@@ -43,6 +45,12 @@ export class ProdutoDetailPage implements OnInit {
       
       });
     
+  }
+
+  adicionar(produto:ProdutoDTO){
+    this.cartService.addProduto(produto);
+    this.router.navigate(['cart']);
+
   }
   
 

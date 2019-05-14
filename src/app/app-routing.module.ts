@@ -13,6 +13,7 @@ const routes: Routes = [
   { path: 'signup', loadChildren: './signup/signup.module#SignupPageModule' },
   { path: 'produtos', loadChildren: './produtos/produtos.module#ProdutosPageModule' },
   { path: 'produto-detail', loadChildren: './produto-detail/produto-detail.module#ProdutoDetailPageModule' },
+  { path: 'cart', loadChildren: './cart/cart.module#CartPageModule' },
 
 ];
 
