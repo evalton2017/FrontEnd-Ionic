@@ -15,7 +15,8 @@ export class AppComponent {
     {title: 'Home', url: '/home',icon: ''},
     {title: 'Profile', url: '/profile'},
     {title: 'Categorias', url: '/categorias'},
-
+    {title:'Carrinho', url:'/cart'}
+ 
   ];
 
   constructor(
