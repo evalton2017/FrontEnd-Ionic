@@ -4,12 +4,20 @@ import { Observable } from 'rxjs';
 import { ClienteDTO } from 'src/models/cliente.dto';
 import { API_CONFIG } from 'src/config/api.config';
 import { StorageService } from '../storage.service';
+import { PedidoDTO } from 'src/models/pedido.dto';
+
 
 @Injectable()
 export class ClienteService{
 
+    pedido: PedidoDTO;
+
     constructor(public http:HttpClient, public storage:StorageService){
 
+    }
+
+    findById(id:string){
+        return this.http.get<any>(`${API_CONFIG.baseUrl}/clientes/${id}`)
     }
 
     findByEmail(email:string): Observable<any>{
@@ -33,5 +41,15 @@ export class ClienteService{
             }     
         );
     }
+
+    setPedido(pedido: PedidoDTO){
+        this.pedido=pedido;
+    }
+
+    getPedido(){
+        return this.pedido;
+    }
+
+   
 
 }

@@ -1,5 +1,5 @@
 export interface PagamentoDTO{
-    numeroDeParcelas:number;
-    "@Type":string;
+    numeroDeParcelas?:number;
+    "@type":string;
 
 }

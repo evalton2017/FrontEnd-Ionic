@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { EnderecoDTO } from 'src/models/endereco.dto';
 import { StorageService } from 'src/services/storage.service';
 import { ClienteService } from 'src/services/domain/cliente.service';
 import { Router } from '@angular/router';
 import { PedidoDTO } from 'src/models/pedido.dto';
 import { CartService } from 'src/services/domain/cart.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-pick-address',
@@ -20,7 +21,9 @@ export class PickAddressPage implements OnInit {
     private storage:StorageService,
     private clienteService:ClienteService,
     private router:Router,
-    private cartService:CartService
+    private cartService:CartService,
+    public navCrtl:NavController
+
   ) { }
 
   ngOnInit() {
@@ -29,9 +32,7 @@ export class PickAddressPage implements OnInit {
       this.clienteService.findByEmail(localUser.email)
         .subscribe(response=>{
           this.items=response['enderecos'];
-
           let cart=this.cartService.getCart();
-
           this.pedido={
             cliente:{id:response['id']},
             enderecoDeEntrega:null,
@@ -42,17 +43,21 @@ export class PickAddressPage implements OnInit {
         },
         error=>{
           if(error.status ==403){
-            this.router.navigate(['home']);
+            this.router.navigate(['cart']);
           }
         });
     }else{
-      this.router.navigate(['home']);
+      this.router.navigate(['cart']);
     }
   }
 
   nextPage(item:EnderecoDTO){
-    this.pedido.enderecoDeEntrega = item;
-    console.log(this.pedido);
+    this.pedido.enderecoDeEntrega = {id:item.id};
+    this.clienteService.setPedido(this.pedido);
+    this.router.navigate(['payment']);    
+     
   }
+
+
 
 }
