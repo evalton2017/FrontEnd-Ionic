@@ -3,6 +3,8 @@ import { ProdutoDTO } from 'src/models/produto.dto';
 import { Router, Params, ActivatedRoute } from '@angular/router';
 import { ProdutoService } from 'src/services/domain/produto.service';
 import { API_CONFIG } from 'src/config/api.config';
+import { LoadingController } from '@ionic/angular';
+import { async } from '@angular/core/testing';
 
 
 @Component({
@@ -13,27 +15,34 @@ import { API_CONFIG } from 'src/config/api.config';
 export class ProdutosPage implements OnInit {
 
   items:ProdutoDTO[];
+  isLoading = false;
+ 
 
   constructor(
     private produtoService:ProdutoService,
     private route:ActivatedRoute,
-    private router:Router
+    private router:Router,
+    public loadController:LoadingController
     ) { }
 
   ngOnInit() {
+    this.loadData();
     
+  }
+
+  loadData(){
     this.route.params.subscribe((id:Params)=>{
-      this.produtoService.findByCategoria(id.categoria_id)
-      .subscribe(
-        (response)=>{
-        this.items=response['content'];
-        this.loadImageUrls()
-        
-      },
-      error=>{
-      
-      }); 
-    });
+      this.presentLoading();
+     this.produtoService.findByCategoria(id.categoria_id)
+     .subscribe(
+       (response)=>{
+       this.items=response['content'];  
+       this.loadImageUrls()
+       
+     },
+     error=>{
+     }); 
+   });
   }
 
   loadImageUrls(){
@@ -51,6 +60,23 @@ export class ProdutosPage implements OnInit {
   showDetail(produto_id:string)
   {
     this.router.navigate(['produto-detail',{produto_id:produto_id}])
+  }
+
+  async presentLoading() {
+    let loading = await this.loadController.create({
+      message: 'Aguarde...'
+    });
+    await loading.present();
+    await loading.dismiss();
+    return loading;   
+  }
+
+
+  doRefresh(event) {
+    this.loadData();
+    setTimeout(() => {
+      event.target.complete();
+    }, 1000);
   }
 
 }

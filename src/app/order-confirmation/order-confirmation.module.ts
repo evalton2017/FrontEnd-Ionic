@@ -6,6 +6,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { OrderConfirmationPage } from './order-confirmation.page';
+import { PedidoService } from 'src/services/domain/pedido.service';
 
 const routes: Routes = [
   {
@@ -19,7 +20,11 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    
+  ],
+  providers:[
+    PedidoService
   ],
   declarations: [OrderConfirmationPage]
 })
