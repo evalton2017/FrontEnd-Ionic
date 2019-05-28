@@ -4,8 +4,6 @@ import { Router, Params, ActivatedRoute } from '@angular/router';
 import { ProdutoService } from 'src/services/domain/produto.service';
 import { API_CONFIG } from 'src/config/api.config';
 import { LoadingController } from '@ionic/angular';
-import { async } from '@angular/core/testing';
-
 
 @Component({
   selector: 'app-produtos',
@@ -14,9 +12,10 @@ import { async } from '@angular/core/testing';
 })
 export class ProdutosPage implements OnInit {
 
-  items:ProdutoDTO[];
+  items:ProdutoDTO[]=[];
   isLoading = false;
- 
+  page:number=0;
+   
 
   constructor(
     private produtoService:ProdutoService,
@@ -33,11 +32,15 @@ export class ProdutosPage implements OnInit {
   loadData(){
     this.route.params.subscribe((id:Params)=>{
       this.presentLoading();
-     this.produtoService.findByCategoria(id.categoria_id)
+     this.produtoService.findByCategoria(id.categoria_id, this.page,5)
      .subscribe(
        (response)=>{
-       this.items=response['content'];  
-       this.loadImageUrls()
+       let start = this.items.length;
+       this.items=this.items.concat(response['content']);  
+       let end = this.items.length-1;
+       console.log(this.page)
+       console.log(this.items)
+       this.loadImageUrls(start,end)
        
      },
      error=>{
@@ -45,8 +48,8 @@ export class ProdutosPage implements OnInit {
    });
   }
 
-  loadImageUrls(){
-    for(var i=0; i<this.items.length; i++){
+  loadImageUrls(start:number, end:number){
+    for(var i=start; i<end; i++){
       let item = this.items[i];
       this.produtoService.getSmallImageFromBucket(item.id)
         .subscribe(response=>{
@@ -73,10 +76,24 @@ export class ProdutosPage implements OnInit {
 
 
   doRefresh(event) {
+    this.page=0;
+    this.items=[];
     this.loadData();
     setTimeout(() => {
       event.target.complete();
     }, 1000);
+  }
+
+  loadInfinit(event) {
+    this.page++;
+    this.loadData()
+    setTimeout(() => {
+      console.log('Done');
+      event.target.complete();
+      if (this.items.length == 1000) {
+        event.target.disabled = true;
+      }
+    }, 500);
   }
 
 }

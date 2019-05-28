@@ -5,6 +5,7 @@ import { ClienteDTO } from 'src/models/cliente.dto';
 import { API_CONFIG } from 'src/config/api.config';
 import { StorageService } from '../storage.service';
 import { PedidoDTO } from 'src/models/pedido.dto';
+import { ImageUtilService } from '../image-util.service';
 
 
 @Injectable()
@@ -12,7 +13,11 @@ export class ClienteService{
 
     pedido: PedidoDTO;
 
-    constructor(public http:HttpClient, public storage:StorageService){
+    constructor(
+        public http:HttpClient,
+        public storage:StorageService,
+        public imageUtilService:ImageUtilService
+        ){
 
     }
 
@@ -50,6 +55,21 @@ export class ClienteService{
         return this.pedido;
     }
 
+    uploadPicture(picture){
+        let pictureBlob = this.imageUtilService.dataUriToBlob(picture);
+        let formData: FormData = new FormData();
+        formData.set('file',pictureBlob, 'file.jpg');
+
+        return this.http.post(
+            `${API_CONFIG.baseUrl}/clientes/picture`,
+            picture,
+            {
+                observe:'response',
+                responseType:'text'
+            }     
+        );
+
+    }
    
 
 }

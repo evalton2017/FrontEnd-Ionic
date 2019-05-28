@@ -4,6 +4,7 @@ import { ClienteDTO } from 'src/models/cliente.dto';
 import { ClienteService } from 'src/services/domain/cliente.service';
 import { API_CONFIG } from 'src/config/api.config';
 import { Router } from '@angular/router';
+import { Camera, CameraOptions } from '@ionic-native/camera/ngx';
 
 @Component({
   selector: 'app-profile',
@@ -13,14 +14,21 @@ import { Router } from '@angular/router';
 export class ProfilePage implements OnInit {
 
   cliente:ClienteDTO;
+  picture:String;
+  cameraOn:boolean=false;
 
   constructor(
     private storage:StorageService,
     private clienteService:ClienteService,
-    private router:Router
+    private router:Router,
+    private camera:Camera,
   ) { }
 
   ngOnInit() {
+    this.loadData()
+  }
+
+  loadData(){
     let localUser = this.storage.getLocalUser();
     if(localUser && localUser.email){
       this.clienteService.findByEmail(localUser.email)
@@ -47,6 +55,35 @@ export class ProfilePage implements OnInit {
       
       });
     
+  }
+
+  getCameraPicture(){
+    this.cameraOn=true;
+
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.FILE_URI,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    this.camera.getPicture(options).then((imageData) => {
+     this.picture = 'data:image/jpeg;base64,' + imageData;
+     this.cameraOn=false;
+    }, (err) => {
+     
+    });
+  }
+
+  sendPicture(){
+    this.clienteService.uploadPicture(this.picture)
+      .subscribe(repspnse=>{
+        this.picture= null;
+        this.loadData()
+      },
+      error=>{
+
+      });
   }
 
   

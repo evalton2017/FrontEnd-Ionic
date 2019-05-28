@@ -18,6 +18,7 @@ import { ClienteService } from 'src/services/domain/cliente.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProdutoService } from 'src/services/domain/produto.service';
 import { CartService } from 'src/services/domain/cart.service';
+import { ImageUtilService } from 'src/services/image-util.service';
 
 
 
@@ -45,7 +46,8 @@ import { CartService } from 'src/services/domain/cart.service';
     StorageService,
     ClienteService,
     ProdutoService,
-    CartService
+    CartService,
+    ImageUtilService
   ],
   bootstrap: [AppComponent]
 })
