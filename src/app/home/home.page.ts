@@ -37,6 +37,7 @@ export class HomePage {
   ionViewDidEnter(){
     this.auth.refreshToken()
       .subscribe(response =>{
+        
         this.auth.successfulLogin(response.headers.get('Authorization'));
         this.ctrlNav.navigateForward('categorias');
       },
